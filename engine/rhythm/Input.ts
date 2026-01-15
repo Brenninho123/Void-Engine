@@ -15,3 +15,7 @@ export class Input {
     return !!Input.keys[map[lane]];
   }
 }
+
+static isPressed(key: string) {
+  return !!Input.keys[key];
+}
