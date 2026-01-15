@@ -1,33 +1,55 @@
 export class Input {
   static keys: Record<string, boolean> = {};
 
-  static init() {
+  // 🎹 Teclado
+  static initKeyboard() {
     window.addEventListener("keydown", e => {
       Input.keys[e.key] = true;
     });
+
     window.addEventListener("keyup", e => {
       Input.keys[e.key] = false;
     });
   }
 
-  static isLanePressed(lane: number): boolean {
-    const map = ["ArrowLeft", "ArrowDown", "ArrowUp", "ArrowRight"];
-    return !!Input.keys[map[lane]];
+  // 📱 Touch (mobile)
+  static initTouch() {
+    window.addEventListener("touchstart", e => {
+      for (let i = 0; i < e.touches.length; i++) {
+        const x = e.touches[i].clientX;
+        const lane = Math.floor(x / (window.innerWidth / 4));
+        Input.keys["lane" + lane] = true;
+      }
+    });
+
+    window.addEventListener("touchend", () => {
+      Input.keys = {};
+    });
   }
-}
 
-static isPressed(key: string) {
-  return !!Input.keys[key];
-}
+  // 🔘 Tecla genérica
+  static isPressed(key: string): boolean {
+    return !!Input.keys[key];
+  }
 
-static initTouch() {
-  window.addEventListener("touchstart", e => {
-    const x = e.touches[0].clientX;
-    const lane = Math.floor(x / (window.innerWidth / 4));
-    Input.keys["lane" + lane] = true;
-  });
+  // 🎶 Lane FNF (teclado + touch)
+  static isLanePressed(lane: number): boolean {
+    const keyboardMap = [
+      "ArrowLeft",
+      "ArrowDown",
+      "ArrowUp",
+      "ArrowRight"
+    ];
 
-  window.addEventListener("touchend", () => {
-    Input.keys = {};
-  });
+    return (
+      !!Input.keys[keyboardMap[lane]] ||
+      !!Input.keys["lane" + lane]
+    );
+  }
+
+  // 🚀 Inicialização geral
+  static init() {
+    Input.initKeyboard();
+    Input.initTouch();
+  }
 }
