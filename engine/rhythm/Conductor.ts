@@ -1,3 +1,5 @@
+import { AudioManager } from "../audio/AudioManager";
+
 export class Conductor {
   static bpm = 120;
   static crochet = 0;
@@ -8,7 +10,7 @@ export class Conductor {
     this.crochet = (60 / bpm) * 1000;
   }
 
-  static update(deltaMs: number) {
-    this.songPosition += deltaMs;
+  static update() {
+    this.songPosition = AudioManager.getTimeMs();
   }
 }
