@@ -9,4 +9,5 @@ Void Engine is a 2D game engine created in TypeScript, focused on rhythm games, 
 - Modular 
 - Open Source (Apache 2.0) 
 
-## Status Under development 🚧
+## Status Under 
+development 🚧
