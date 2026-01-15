@@ -20,3 +20,7 @@ export class MainScene extends Scene {
     this.strum.draw(ctx);
   }
 }
+
+if (Input.isPressed("Escape")) {
+  AudioManager.pause();
+}
