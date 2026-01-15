@@ -1,7 +1,43 @@
 {
-  "dependencies": {
-    "@capacitor/android": "^8.0.1",
-    "@capacitor/cli": "^8.0.1",
-    "@capacitor/core": "^8.0.1"
+  "name": "void-engine",
+  "version": "0.1.0",
+  "description": "Void Engine - Custom TypeScript rhythm game engine",
+  "author": "Breno",
+  "license": "Apache-2.0",
+
+  "main": "main.js",
+
+  "scripts": {
+    "dev": "tsc -w",
+    "build:web": "tsc",
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+
+  "dependencies": {},
+
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "electron": "^30.0.0",
+    "electron-builder": "^24.9.1"
+  },
+
+  "build": {
+    "appId": "com.breno.voidengine",
+    "productName": "Void Engine",
+    "files": [
+      "dist/**/*",
+      "public/**/*",
+      "main.js",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets",
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    }
   }
 }
