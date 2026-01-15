@@ -1,5 +1,3 @@
-import { Conductor } from "./Conductor";
-
 export class Note {
   time: number;
   lane: number;
@@ -12,9 +10,5 @@ export class Note {
     this.time = time;
     this.lane = lane;
     this.length = length;
-  }
-
-  update(scroll: number, songPos: number) {
-    this.y = 400 - (this.time - songPos) * scroll;
   }
 }
