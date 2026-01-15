@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+
+  <title>Void Engine</title>
+
+  <!-- Mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#000000" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      touch-action: none;
+      user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    #ui {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    /* Debug / HUD */
+    #hud {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: white;
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    /* Touch overlay (opcional) */
+    .lane {
+      position: absolute;
+      bottom: 0;
+      width: 25%;
+      height: 100%;
+      pointer-events: auto;
+    }
+
+    .lane:nth-child(1) { left: 0; }
+    .lane:nth-child(2) { left: 25%; }
+    .lane:nth-child(3) { left: 50%; }
+    .lane:nth-child(4) { left: 75%; }
+  </style>
+</head>
+<body>
+
+  <!-- UI Overlay -->
+  <div id="ui">
+    <div id="hud">
+      <div id="mode">MODE: GAME</div>
+      <div id="info">Void Engine</div>
+    </div>
+
+    <!-- Touch lanes -->
+    <div class="lane" data-lane="0"></div>
+    <div class="lane" data-lane="1"></div>
+    <div class="lane" data-lane="2"></div>
+    <div class="lane" data-lane="3"></div>
+  </div>
+
+  <!-- Engine bundle -->
+  <script type="module">
+    // Detect editor mode
+    const mode = location.hash === "#editor" ? "EDITOR" : "GAME";
+    document.getElementById("mode").innerText = "MODE: " + mode;
+
+    // Touch lanes (UI → Input)
+    document.querySelectorAll(".lane").forEach(lane => {
+      lane.addEventListener("touchstart", e => {
+        const index = lane.getAttribute("data-lane");
+        window.dispatchEvent(new CustomEvent("void-touch", {
+          detail: Number(index)
+        }));
+      });
+
+      lane.addEventListener("touchend", () => {
+        window.dispatchEvent(new CustomEvent("void-touch-end"));
+      });
+    });
+  </script>
+
+  <!-- Compiled TS -->
+  <script type="module" src="./dist/index.js"></script>
+
+</body>
+</html>
